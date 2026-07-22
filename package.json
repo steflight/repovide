@@ -1,0 +1,17 @@
+{
+  "name": "agoum7",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "tsc -b --clean",
+    "start:comm": "npm run start -w @agoum7/comm"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}

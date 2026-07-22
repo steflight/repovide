@@ -1,0 +1,7 @@
+services:
+  comm:
+    image: ghcr.io/OWNER/agoum7-comm:latest   # remplace OWNER par ton compte GitHub
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:3000:3000"   # local only ; Traefik/Caddy route + HTTPS (Lot 2)

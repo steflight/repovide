@@ -1,0 +1,14 @@
+# Dépendances
+node_modules/
+
+# Sorties de build (tsc -b)
+dist/
+*.tsbuildinfo
+
+# Env local (jamais de secrets en clair — voir apps/comm/.env.example)
+.env
+apps/**/.env
+
+# Outils / éditeurs
+.claude/
+.DS_Store
