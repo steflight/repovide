@@ -29,11 +29,11 @@ Node 22+ requis.
 ## CI / CD
 
 - `ci.yml` — sur chaque PR et sur `main` : build (typecheck) + lint/test si présents.
-- `deploy-comm.yml` — sur push `main` touchant `apps/comm` ou `packages/**` (ou run manuel) :
-  - `build-and-push` : build de l'image → publication sur GHCR (`ghcr.io/steflight/agoum7-comm`, tags `latest` + SHA). **Actif** (aucun VPS requis).
-  - `deploy` : `docker compose pull && up -d` sur le VPS en SSH + health check. **Inactif** tant que les secrets `VPS_HOST` / `VPS_USER` / `VPS_SSH_KEY` sont absents.
+- `deploy-comm.yml` — **build sur le serveur** : rsync des sources vers le VPS puis
+  `docker compose up -d --build` + health check (aucun registre, aucun token — la clé SSH suffit).
+  **Inactif** tant que les secrets `VPS_HOST` / `VPS_USER` / `VPS_SSH_KEY` sont absents.
 
-Mise en route du déploiement (VPS, secrets, rollback) : voir **[`docs/DEPLOY.md`](docs/DEPLOY.md)**.
+Lancer sur le serveur (manuel ou automatisé), secrets, rollback : voir **[`docs/DEPLOY.md`](docs/DEPLOY.md)**.
 
 `main` doit être protégée (PR obligatoire) : le **merge** d'une PR est la validation humaine (§10).
 
