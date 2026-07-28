@@ -1,7 +1,18 @@
 services:
   comm:
-    image: ghcr.io/OWNER/agoum7-comm:latest   # remplace OWNER par ton compte GitHub
+    # Build directement sur le serveur depuis les sources (contexte = racine du monorepo).
+    # `docker compose up -d --build` construit l'image ici, sans registre externe.
+    build:
+      context: ../..
+      dockerfile: apps/comm/Dockerfile
+    image: agoum7-comm:local
     restart: unless-stopped
     env_file: .env
     ports:
-      - "127.0.0.1:3000:3000"   # local only ; Traefik/Caddy route + HTTPS (Lot 2)
+      - "127.0.0.1:3000:3000"   # local only ; reverse-proxy + HTTPS = Lot 2
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
